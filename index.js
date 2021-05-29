@@ -1,9 +1,11 @@
 const express = require("express");
 const app = express();
 
+app.use(express.json());
+
 const pizzas = require("./database/pizzas.json")
 
-  const listarTodasAsPizzas = () => {
+ const listarTodasAsPizzas = () => {
       let conteudo = "";
 
       pizzas.forEach(pizza => {
@@ -25,6 +27,10 @@ const procurarPizzaPeloSabor = function (saborPizza) {
   return pizzaEncontrada
 } 
 
+app.get("./pizzas",(req, res) => {
+  return res.json(pizzas)
+});
+
 
   const adicionarPizza = function(sabor, categoria, preco){
       const pizzaNova = {
@@ -38,11 +44,12 @@ const procurarPizzaPeloSabor = function (saborPizza) {
       console.log(`A pizza de ${sabor} foi adicionada com sucesso!`);
   }
 
-  adicionarPizza("Presunto", "Salgada", 25);
+  
 
-  console.log(listarTodasAsPizzas())
+  
 
 app.listen(3000,() => {
   console.log("O Servidor está on")
 });
 
+//criar rota para criar nova pizza, nova pizza precisa ter id, usar metodo http
